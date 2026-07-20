@@ -30,3 +30,11 @@ export interface Game {
   date_added: string
   date_completed: string | null
 }
+
+export interface GameFormInput {
+  title: string
+  platform: Platform
+  status: Status
+  rating: number | null
+  notes: string | null
+}

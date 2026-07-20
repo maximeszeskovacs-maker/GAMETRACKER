@@ -22,7 +22,7 @@ the API key must stay server-side, so the browser never talks to Steam directly.
 
 ```
 backend/    FastAPI + SQLAlchemy + Alembic  (health endpoint scaffolded)
-frontend/   React + Vite + TypeScript       (not scaffolded yet)
+frontend/   React + Vite + TypeScript       (fetches backend health)
 ```
 
 ## Running it
@@ -46,9 +46,13 @@ API docs are at `http://localhost:8000/docs`.
 
 ```bash
 cd frontend
-# npm install
-# npm run dev                        # → http://localhost:5173
+npm install
+npm run dev   # → http://localhost:5173
 ```
+
+Requests to `/api/*` are proxied to the backend at `http://localhost:8000` in dev
+(configured in `vite.config.ts`), so the backend must be running too. The home page
+fetches `/api/health` and shows "Backend: ok" once both are up.
 
 ## Configuration
 
@@ -65,4 +69,7 @@ public, plus your SteamID64 or vanity URL (entered in the app's Settings).
 ## Status
 
 Backend scaffolded: FastAPI app with CORS (allowing `http://localhost:5173`) and a
-`/health` endpoint. No DB models or game endpoints yet. Frontend not scaffolded yet.
+`/health` endpoint. No DB models or game endpoints yet.
+
+Frontend scaffolded: Vite + React + TypeScript with TanStack Query, proxying `/api`
+to the backend and displaying the health status. No routing or other pages yet.

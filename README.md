@@ -21,24 +21,26 @@ the API key must stay server-side, so the browser never talks to Steam directly.
 ## Layout
 
 ```
-backend/    FastAPI + SQLAlchemy + Alembic  (not scaffolded yet)
+backend/    FastAPI + SQLAlchemy + Alembic  (health endpoint scaffolded)
 frontend/   React + Vite + TypeScript       (not scaffolded yet)
 ```
 
 ## Running it
 
-> Placeholders — neither side is scaffolded yet. Commands will be filled in as
-> the backend and frontend land.
-
 ### Backend
 
 ```bash
 cd backend
-# create + activate a virtualenv, then install deps
-# uvicorn app.main:app --reload      # → http://localhost:8000
+python -m venv .venv
+.venv\Scripts\activate        # Windows (bash: source .venv/Scripts/activate)
+pip install -e .
+copy .env.example .env        # then fill in STEAM_API_KEY
+uvicorn app.main:app --reload # → http://localhost:8000
 ```
 
-API docs will be at `http://localhost:8000/docs`.
+Verify it's up: `curl http://localhost:8000/health` → `{"status":"ok"}`
+
+API docs are at `http://localhost:8000/docs`.
 
 ### Frontend
 
@@ -62,4 +64,5 @@ public, plus your SteamID64 or vanity URL (entered in the app's Settings).
 
 ## Status
 
-Step 1 of the build plan: monorepo skeleton only. No app code yet.
+Backend scaffolded: FastAPI app with CORS (allowing `http://localhost:5173`) and a
+`/health` endpoint. No DB models or game endpoints yet. Frontend not scaffolded yet.
